@@ -1,4 +1,3 @@
-```markdown
 # Dante's Star - Maze Generation and Solver
 
 ## Project Overview
@@ -65,4 +64,3 @@ The project is structured around the nine circles of Hell from Dante's Divine Co
 Feel free to explore the generalfiles directory for additional shared features.
 
 Happy coding in Dante's maze of challenges!
-```
