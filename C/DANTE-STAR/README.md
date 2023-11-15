@@ -1,5 +1,7 @@
 # Dante's Star - Maze Generation and Solver
 
+![Illustration](https://labyrinth.tech/assets/media/news/labyrinth-generation-algorithm.jpg)
+
 ## Project Overview
 
 This project, titled "Dante's Star," is an implementation of maze generation and solving inspired by Dante Alighieri's "The Divine Comedy." The goal is to navigate through nine circles of Hell, representing different challenges in maze solving.
