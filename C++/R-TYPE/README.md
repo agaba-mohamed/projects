@@ -1,5 +1,7 @@
 # R-Type Game Documentation
 
+![Illustration](https://m.media-amazon.com/images/I/911DV9FiRTL.png)
+
 ## Overview
 
 This document provides comprehensive information about the R-Type codebase, encompassing the architecture, core functionality, server-client communication, map builder, and associated protocols.
