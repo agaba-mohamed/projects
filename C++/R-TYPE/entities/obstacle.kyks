@@ -1,0 +1,8 @@
+name : obstacle
+position : {0,0,0.5, L};
+rect : {0,64,0,64}
+size : {1,5,1,5}
+hitbox : true
+texture : ../assets/block.png
+file : ../libs/enemy.dll
+fileDesc :o

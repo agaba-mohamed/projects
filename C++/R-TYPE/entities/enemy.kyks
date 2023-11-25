@@ -1,0 +1,8 @@
+name : basic_enemy
+pos : {0,0,0.5,L};
+rect : {28,28,0,35}
+size : {1,5,1,5}
+hitbox : true
+texture : ../assets/sprites/r-typesheet5.gif
+file : ../libs/enemy.dll
+fileDesc :x

@@ -1,0 +1,8 @@
+name : rotate_bullet
+texture :  ../assets/sprites/r-typesheet30a.gif
+pos : {0, 0,0.5, R}
+rect: {0, 33, 0, 34}
+size : {1,5,1,5}
+health : 100
+hitbox : true
+file : ../libs/rotate_bullet.dll

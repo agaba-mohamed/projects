@@ -1,0 +1,8 @@
+name : chase_bullet
+texture :  ../assets/sprites/r-typesheet30a.gif
+pos : {0,0,R,0.5}
+rect: {0, 33, 0, 34}
+size : {1,5,1,5}
+health : 100
+hitbox : true
+file : ../libs/chase_bullet.dll

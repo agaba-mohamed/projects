@@ -1,0 +1,9 @@
+name : player
+weapon : bullet
+texture : ../assets/player.png
+pos : {500, 250,0.5,N}
+rect : {0, 33, 0, 21}
+size : {1,5,1,5}
+health : 100
+hitbox : true
+file : ../libs/player.dll
