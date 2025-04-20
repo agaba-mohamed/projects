@@ -1,4 +1,4 @@
-```markdown
+
 # Bender: Sudoku‑Solving Robotic Arm
 
 **Bender** is a standalone system that uses the Dobot Magician robotic arm to read, solve, and physically write the solution to a Sudoku puzzle on paper. citeturn1file0
