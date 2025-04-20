@@ -1,3 +1,4 @@
+![Alt text](assets/illus.png)
 
 # Bender: Sudoku‑Solving Robotic Arm
 
