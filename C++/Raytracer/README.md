@@ -2,168 +2,353 @@
 
 ![Illustration](https://developer.nvidia.com/blog/wp-content/uploads/2018/10/revid2screen8.png)
 
-### Mandatory Features
+---
+
+## ![France](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/fr.png "France") Version Française
+
+### Présentation
+
+Ce projet est un **moteur de lancer de rayons (raytracer)** écrit en C++.
+Il permet de générer des scènes 3D en traçant les rayons lumineux dans un environnement défini par un fichier de configuration externe.
+
+### Fonctionnalités obligatoires
 
 #### Primitives
-- Sphere
-- Plane
+
+* Sphère
+* Plan
 
 #### Transformations
-- Translation
 
-#### Light
-- Directional light
-- Ambient light
+* Translation
 
-#### Material
-- Flat color
+#### Lumière
 
-#### Scene Configuration
-- Add primitives to the scene
-- Set up lighting
-- Set up camera
+* Lumière directionnelle
+* Lumière ambiante
+
+#### Matériaux
+
+* Couleur unie (flat shading)
+
+#### Scène
+
+* Ajout de primitives
+* Définition de l’éclairage
+* Configuration de la caméra
 
 #### Interface
-- No GUI, output to a PPM file
 
-### Usage
+* Pas d'interface graphique (sortie image en format PPM)
+
+### Utilisation
+
 ```bash
-./raytracer <SCENE_FILE>
+./raytracer <FICHIER_SCENE>
 ```
-- **SCENE_FILE:** Scene configuration
 
-### Bonus Features
+* **FICHIER\_SCENE** : fichier de configuration de la scène
+
+---
+
+### Fonctionnalités bonus
 
 #### Primitives
-- Cylinder (Should)
-- Cone (Should)
-- Limited cylinder (Could)
-- Limited cone (Could)
-- Torus (Could)
-- Tanglecube (Could)
-- Triangles (Could)
-- .OBJ file (Could)
-- Fractals (Could)
-- Möbius strip (Could)
+
+* Cylindre, Cône
+* Cylindre/Cône limités
+* Tore, Tanglecube
+* Triangles, fichiers `.OBJ`
+* Fractales, Ruban de Möbius
 
 #### Transformations
-- Rotation (Should)
-- Scale (Could)
-- Shear (Could)
-- Transformation matrix (Could)
-- Scene graph (Could)
 
-#### Light
-- Drop shadows (Should)
-- Multiple directional lights (Could)
-- Multiple point lights (Could)
-- Colored light (Could)
-- Phong reflection model (Could)
-- Ambient occlusion (Could)
+* Rotation, Échelle, Cisaillement
+* Matrices de transformation
+* Graphe de scène
 
-#### Material
-- Transparency (Could)
-- Refraction (Could)
-- Reflection (Could)
-- Texturing from file (Could)
-- Texturing from procedural generation of chessboard (Could)
-- Texturing from procedural generation of Perlin noise (Could)
-- Normal mapping (Could)
+#### Lumière
 
-#### Scene Configuration
-- Import a scene in a scene (Could)
-- Set up antialiasing through supersampling (Could)
-- Set up antialiasing through adaptive supersampling (Could)
+* Ombres portées
+* Multiples lumières directionnelles ou ponctuelles
+* Lumière colorée
+* Modèle de Phong
+* Occlusion ambiante
 
-#### Optimizations
-- Space partitioning (Could)
-- Multithreading (Could)
-- Clustering (Could)
+#### Matériaux
+
+* Transparence, réfraction, réflexion
+* Textures depuis fichier ou générées procéduralement (échiquier, Perlin)
+* Normal mapping
+
+#### Scène
+
+* Scène imbriquée
+* Anticrénelage (supersampling, adaptatif)
+
+#### Optimisations
+
+* Partitionnement spatial
+* Multithreading
+* Clustering
 
 #### Interface
-- Display the image during and after generation (Could)
-- Exit during or after generation (Could)
-- Scene preview using a basic and fast renderer (Could)
-- Automatic reload of the scene at file change (Could)
 
-### Scene File Format
-The rendered scene is set up in an external file. It's suggested to use the libconfig++ library, but you can implement your own parser and syntax. Here is an example scene file using libconfig++ file format:
+* Aperçu temps réel
+* Rechargement automatique à la modification du fichier
 
-```plaintext
-# Configuration of the camera
+---
+
+### Format du fichier de scène
+
+Exemple avec `libconfig++` :
+
+```cfg
 camera:
 {
     resolution = { width = 1920; height = 1080; };
     position = { x = 0; y = -100; z = 20; };
     rotation = { x = 0; y = 0; z = 0; };
-    fieldOfView = 72.0; # In degree
+    fieldOfView = 72.0;
 };
 
-# Primitives in the scene
 primitives:
 {
-    # List of spheres
     spheres = (
-        { x = 60; y = 5; z = 40; r = 25; color = { r = 255; g = 64; b = 64; }; } ,
+        { x = 60; y = 5; z = 40; r = 25; color = { r = 255; g = 64; b = 64; }; },
         { x = -40; y = 20; z = -10; r = 35; color = { r = 64; g = 255; b = 64; }; }
     );
-
-    # List of planes
     planes = (
         { axis = "Z"; position = -20; color = { r = 64; g = 64; b = 255; }; }
     );
 };
 
-# Light configuration
 lights:
 {
-    ambient = 0.4; # Multiplier of ambient light
-    diffuse = 0.6; # Multiplier of diffuse light
-
-    # List of point lights
-    point = (
-        { x = 400; y = 100; z = 500; };
-    );
-
-    # List of directional lights
+    ambient = 0.4;
+    diffuse = 0.6;
+    point = ( { x = 400; y = 100; z = 500; } );
     directional = ();
 };
 ```
 
+---
+
 ### Architecture
 
 #### Interfaces
-To allow extensibility, use interfaces for at least your primitives and lights.
+
+Les primitives et sources lumineuses doivent implémenter des interfaces pour favoriser l’extensibilité.
 
 #### Plugins
-The rendering engine should be extensible, allowing the addition of new features without completely rewriting the code. You can implement this using dynamic libraries (.so) as plugins loaded at runtime (not mandatory).
+
+Le moteur peut charger des fonctionnalités supplémentaires à l’aide de bibliothèques dynamiques (`.so`).
 
 #### Design Patterns
-Use at least 2 design patterns from the following list:
-- Factory
-- Builder
-- Composite
-- Decorator
-- Observer
-- State
-- Mediator
 
-Your choices of design patterns will be discussed during the defense.
+Utiliser au moins **2 design patterns** parmi :
 
-### Authorized Libraries
-The only authorized libraries are:
-- libconfig++ for parsing the scene configuration file
-- SFML 2.5.1 for displaying
+* Factory, Builder, Composite, Decorator
+* Observer, State, Mediator
 
-Additional libraries for bonuses need approval from the pedagogical team.
+Ils seront discutés lors de la soutenance.
 
-### Build
+---
+
+### Bibliothèques autorisées
+
+* `libconfig++` pour le parsing
+* `SFML 2.5.1` pour l’affichage
+
+Toute autre bibliothèque nécessite une validation.
+
+---
+
+### Compilation
 
 #### Makefile
-Your Makefile must have the usual mandatory rules. Running a simple `make` command in your turn-in directory should generate the raytracer program at the root of the repository and optional plugins in the ./plugins/ directory.
+
+Un `make` à la racine doit générer `./raytracer` et les plugins dans `./plugins/`.
 
 #### CMake
-Your CMakeLists.txt must build a program at the root of the repository and plugins in the ./plugins/ directory at the root of the repository.
+
+```bash
+mkdir ./build/ && cd ./build/
+cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake --build .
+cd ..
+ls ./raytracer ./plugins/
+```
+
+---
+
+## ![United Kingdom](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/gb.png "United Kingdom") English Version
+
+### Overview
+
+This project is a **raytracing engine** written in C++.
+It generates 3D scenes by simulating light rays based on an external scene configuration file.
+
+### Mandatory Features
+
+#### Primitives
+
+* Sphere
+* Plane
+
+#### Transformations
+
+* Translation
+
+#### Light
+
+* Directional light
+* Ambient light
+
+#### Material
+
+* Flat color shading
+
+#### Scene
+
+* Add primitives
+* Setup lighting
+* Configure camera
+
+#### Interface
+
+* No GUI, outputs a `.ppm` image file
+
+### Usage
+
+```bash
+./raytracer <SCENE_FILE>
+```
+
+* **SCENE\_FILE**: path to the scene configuration file
+
+---
+
+### Bonus Features
+
+#### Primitives
+
+* Cylinder, Cone
+* Limited Cylinder/Cone
+* Torus, Tanglecube
+* Triangles, `.OBJ` files
+* Fractals, Möbius strip
+
+#### Transformations
+
+* Rotation, Scale, Shear
+* Transformation matrices
+* Scene graph
+
+#### Light
+
+* Drop shadows
+* Multiple directional and point lights
+* Colored lights
+* Phong lighting model
+* Ambient occlusion
+
+#### Material
+
+* Transparency, Refraction, Reflection
+* File-based and procedural textures (chessboard, Perlin)
+* Normal mapping
+
+#### Scene Features
+
+* Import nested scenes
+* Antialiasing (supersampling, adaptive)
+
+#### Optimizations
+
+* Spatial partitioning
+* Multithreading
+* Clustering
+
+#### Interface
+
+* Live preview and generation display
+* Hot reload on file change
+
+---
+
+### Scene File Format
+
+Example using `libconfig++`:
+
+```cfg
+camera:
+{
+    resolution = { width = 1920; height = 1080; };
+    position = { x = 0; y = -100; z = 20; };
+    rotation = { x = 0; y = 0; z = 0; };
+    fieldOfView = 72.0;
+};
+
+primitives:
+{
+    spheres = (
+        { x = 60; y = 5; z = 40; r = 25; color = { r = 255; g = 64; b = 64; }; },
+        { x = -40; y = 20; z = -10; r = 35; color = { r = 64; g = 255; b = 64; }; }
+    );
+    planes = (
+        { axis = "Z"; position = -20; color = { r = 64; g = 64; b = 255; }; }
+    );
+};
+
+lights:
+{
+    ambient = 0.4;
+    diffuse = 0.6;
+    point = ( { x = 400; y = 100; z = 500; } );
+    directional = ();
+};
+```
+
+---
+
+### Architecture
+
+#### Interfaces
+
+Use interfaces for primitives and lights to keep the code extensible.
+
+#### Plugins
+
+The engine can be extended with `.so` dynamic libraries loaded at runtime (optional).
+
+#### Design Patterns
+
+Use at least **two design patterns**, e.g.:
+
+* Factory, Builder, Composite, Decorator
+* Observer, State, Mediator
+
+These will be discussed during your project defense.
+
+---
+
+### Authorized Libraries
+
+* `libconfig++` for scene parsing
+* `SFML 2.5.1` for optional display
+
+Any extra libraries require prior approval.
+
+---
+
+### Build Instructions
+
+#### Makefile
+
+A `make` command at the root should generate `./raytracer` and optional plugins in `./plugins/`.
+
+#### CMake
 
 ```bash
 mkdir ./build/ && cd ./build/
